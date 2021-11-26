@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Paket;
-use App\Models\Outlet;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Alert;
-use Illuminate\Support\Facades\DB;
+use App\Models\Outlet;
 
-class PaketController extends Controller
+class PenggunaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,29 +17,8 @@ class PaketController extends Controller
      */
     public function index()
     {
-        // $paket = Paket::get();
-
-
-
-        // $jml_pkt = DB::table('paket')
-        // ->selectRaw("outlet.id, COUNT('paket.id_outlet') as paketCount")
-        // ->join('outlet', 'outlet.id', '=', 'paket.id_outlet')
-        // ->groupBy('outlet.id')
-        // ->get();
-
-        // SELECT outlet.*, COUNT(outlet.id) AS jml FROM outlet LEFT JOIN paket ON outlet.id = paket.id_outlet GROUP BY paket.id_outlet
-
-        // $outlet = Outlet::get();
-        $outlet = Outlet::select('outlet.*', DB::raw('count(outlet.id) as jumlah'))
-        ->leftJoin('paket', 'outlet.id', '=', 'paket.id_outlet')
-        ->groupBy('paket.id_outlet')
-        ->get();
-
-
-
-        // SELECT paket.id, COUNT(outlet.id) AS jml FROM outlet INNER JOIN paket ON outlet.id = paket.id_outlet GROUP BY paket.id_outlet
-
-        return view('pages.admin.paket.index', compact('outlet'));
+        $pengguna = User::get();
+        return view('pages.admin.pengguna.index', compact('pengguna'));
     }
 
     /**
@@ -51,7 +29,7 @@ class PaketController extends Controller
     public function create()
     {
         $outlet = Outlet::orderBy('nama', 'asc')->get();
-        return view('pages.admin.paket.create', compact('outlet'));
+        return view('pages.admin.pengguna.create', compact('outlet'));
     }
 
     /**
@@ -64,17 +42,26 @@ class PaketController extends Controller
     {
 
         $this->validate($request, [
-            'nama_paket' => 'required',
+            'nama' => 'required',
+            'username' => 'required',
+            'role' => 'required',
+            'password' => 'required',
             'id_outlet' => 'required',
-            'jenis' => 'required',
-            'harga' => 'required',
         ]);
 
+        $user = [
+            'nama' => $request->nama,
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+            'id_outlet' => $request->id_outlet,
 
-        Paket::create($request->all());
+        ];
+
+        User::create($user);
 
         Alert::success('Berhasil!', 'Data Berhasil Ditambahkan');
-        return redirect()->route('data-paket.index');
+        return redirect()->route('data-pengguna.index');
     }
 
     /**
@@ -85,12 +72,7 @@ class PaketController extends Controller
      */
     public function show($id)
     {
-        $paket = Paket::where('id_outlet', $id)->get();
-
-        // dd($paket);
-        // $paket = Outlet::where('id', $id)->first();
-
-        return view('pages.admin.paket.show', compact('paket'));
+        //
     }
 
     /**
@@ -101,8 +83,9 @@ class PaketController extends Controller
      */
     public function edit($id)
     {
-        $paket = Paket::find($id);
-        return view('pages.admin.paket.edit', compact('paket'));
+        $outlet = Outlet::orderBy('nama', 'asc')->get();
+        $pengguna = User::find($id);
+        return view('pages.admin.pengguna.edit', compact('pengguna', 'outlet'));
     }
 
     /**
@@ -115,17 +98,25 @@ class PaketController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'nama_paket' => 'required',
-            'jenis' => 'required',
-            'harga' => 'required',
+            'nama' => 'required',
+            'username' => 'required',
         ]);
 
+        $user = [
+            'nama' => $request->nama,
+            'username' => $request->username,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+            'id_outlet' => $request->id_outlet,
 
-        $paket = Paket::find($id);
-        $paket = $paket->update($request->all());
+        ];
+
+
+        $pengguna = User::find($id);
+        $pengguna = $pengguna->update($user);
 
         Alert::success('Berhasil!', 'Data Berhasil Diubah');
-        return redirect()->route('data-paket.index');
+        return redirect()->route('data-pengguna.index');
     }
 
     /**
@@ -136,7 +127,7 @@ class PaketController extends Controller
      */
     public function destroy($id)
     {
-        Paket::find($id)->delete();
+        User::find($id)->delete();
 
         Alert::success('Berhasil!', 'Data Berhasil Dihapus');
 

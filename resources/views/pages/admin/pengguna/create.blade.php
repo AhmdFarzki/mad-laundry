@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Data Paket')
+@section('title', 'Data Pengguna')
 
 @section('content')
 
@@ -7,7 +7,7 @@
 <div class="main-content">
     <section class="section">
       <div class="section-header">
-        <h1>Data Paket</h1>
+        <h1>Data Pengguna</h1>
       </div>
 
       <div class="section-body">
@@ -15,36 +15,38 @@
             <div class="col-xl-6">
               <div class="card">
                 <div class="card-header">
-                  <a href="{{ route('data-paket.index') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Kembali</a>
+                  <a href="{{ route('data-pengguna.index') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Kembali</a>
                 </div>
                 <div class="card-body p-0">
-                    <form action="{{ route('data-paket.store') }}" method="POST">
+                    <form action="{{ route('data-pengguna.store') }}" method="POST">
                         @csrf
                         <!-- <div class="card-header">
                           <h4>Isi Data Berikut</h4>
                         </div> -->
                         <div class="card-body">
                           <div class="form-group">
-                            <label>Nama Paket</label>
-                            <input type="text" class="form-control @error('nama_paket') is-invalid @enderror" name="nama_paket" id="nama_paket" value="{{ old('nama_paket') }}" required>
+                            <label>Nama</label>
+                            <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama" value="{{ old('nama') }}" required>
                           </div>
                           <div class="form-group">
-                            <label>Jenis Paket</label>
-                            <select name="jenis" id="" class="custom-select" required>
-                                <option value="kiloan">Kiloan</option>
-                                <option value="selimut">Selimut</option>
-                                <option value="bed_cover">Bed Cover</option>
-                                <option value="kaos">Kaos</option>
-                                <option value="lain">Lain-lain</option>
+                            <label>Username</label>
+                            <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" id="username" value="{{ old('username') }}" required>
+                          </div>
+                          <div class="form-group">
+                            <label>Password</label>
+                            <input type="password"class="form-control @error('password') is-invalid @enderror" name="password" id="password" value="{{ old('password') }}" required>
+                          </div>
+                          <div class="form-group">
+                            <label>Role</label>
+                            <select name="role" id="" class="custom-select" required>
+                                <option value="admin">Admin</option>
+                                <option value="kasir">Kasir</option>
+                                <option value="owner">Owner</option>
                             </select>
                           </div>
                           <div class="form-group">
-                            <label>Harga</label>
-                            <input type="text"class="form-control @error('harga') is-invalid @enderror" name="harga" id="harga" value="{{ old('harga') }}" required>
-                          </div>
-                          <div class="form-group">
                             <label>Outlet</label>
-                            <select name="id_outlet" id="" class="custom-select">
+                            <select name="id_outlet" id="" class="custom-select" required>
                                 @foreach($outlet as $ot)
                                 <option value="{{ $ot->id }}">{{ $ot->nama }}</option>
                                 @endforeach

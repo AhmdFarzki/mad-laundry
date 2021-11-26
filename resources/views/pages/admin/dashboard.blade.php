@@ -22,10 +22,10 @@
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Uang Masuk</h4>
+                    <h4>Total Transaksi</h4>
                   </div>
                   <div class="card-body">
-                    1
+                    {{ $trx }}
                   </div>
                 </div>
               </div>
@@ -37,10 +37,10 @@
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Total Transaksi</h4>
+                    <h4>Pelanggan</h4>
                   </div>
                   <div class="card-body">
-                    2
+                    {{ $member }}
                   </div>
                 </div>
               </div>
@@ -52,10 +52,10 @@
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Total Siswa</h4>
+                    <h4>Total Outlet</h4>
                   </div>
                   <div class="card-body">
-                    3
+                    {{ $outlet }}
                   </div>
                 </div>
               </div>
@@ -67,10 +67,10 @@
                 </div>
                 <div class="card-wrap">
                   <div class="card-header">
-                    <h4>Total Kelas</h4>
+                    <h4>Pengguna</h4>
                   </div>
                   <div class="card-body">
-                    4
+                    {{ $pengguna }}
                   </div>
                 </div>
               </div>
@@ -81,19 +81,12 @@
             <div class="col-md-4">
                 <div class="card card-primary">
                     <div class="card-header">
-                      <h4>Selamat Datang, {{ Auth::user()->name }}!</h4>
+                      <h4>Selamat Datang, {{ Auth::user()->nama }}!</h4>
                     </div>
                     <form action="" method="GET">
                         <div class="card-body">
-                            <p>Silahkan masukan NISN siswa untuk melakukan transaksi SPP.</p>
-                          <div class="form-group">
-                            <div class="input-group mb-3">
-                              <input type="text" class="form-control @error('nisn') is-invalid @enderror" name="nisn" id="nisn" value="{{ old('nisn') }}" placeholder="Masukan NISN disini!" required>
-                              <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i> Cari</button>
-                              </div>
-                            </div>
-                          </div>
+                            <p>Klik tombol dibawah ini untuk menambahkan transaksi baru.</p>
+                            <a href="{{ url('transaksi') }}" class="btn btn-primary"><i class="fas fa-plus"></i> Tambah Transaksi</a>
                         </div>
                       </form>
                   </div>

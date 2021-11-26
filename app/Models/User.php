@@ -47,7 +47,7 @@ class User extends Authenticatable
     // Relasi
     public function outlet()
     {
-        return $this->belongsToMany(Outlet::class, 'id', 'id_outlet',);
+        return $this->belongsTo(Outlet::class, 'id_outlet');
     }
 
     public function user()

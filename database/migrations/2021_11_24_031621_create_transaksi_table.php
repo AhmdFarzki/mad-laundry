@@ -31,7 +31,7 @@ class CreateTransaksiTable extends Migration
 
             $table->foreign('id_outlet')->references('id')->on('outlet')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('id_member')->references('id')->on('member')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_user')->references('id')->on('users');
         });
     }
 

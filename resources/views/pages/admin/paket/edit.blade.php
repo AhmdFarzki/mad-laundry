@@ -18,7 +18,7 @@
                   <a href="{{ route('data-outlet.index') }}" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Kembali</a>
                 </div>
                 <div class="card-body p-0">
-                    <form action="{{ route('data-outlet.update', $outlet->id) }}" method="POST">
+                    <form action="{{ route('data-paket.update', $paket->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <!-- <div class="card-header">
@@ -26,16 +26,22 @@
                         </div> -->
                        <div class="card-body">
                           <div class="form-group">
-                            <label>Nama Outlet</label>
-                            <input type="text" class="form-control @error('nama') is-invalid @enderror" name="nama" id="nama" value="{{ $outlet->nama }}" required>
+                            <label>Nama Paket</label>
+                            <input type="text" class="form-control @error('nama_paket') is-invalid @enderror" name="nama_paket" id="nama_paket" value="{{ $paket->nama_paket }}" required>
                           </div>
                           <div class="form-group">
-                            <label>Alamat</label>
-                            <textarea type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat" required>{{ $outlet->alamat }}</textarea>
-                          </div>
+                            <label>Jenis</label>
+                            <select name="jenis" id="" class="custom-select">
+                                <option value="kiloan">Kiloan</option>
+                                <option value="selimut">Selimut</option>
+                                <option value="bed_cover">Bed Cover</option>
+                                <option value="kaos">Kaos</option>
+                                <option value="lain">Lain-lain</option>
+                            </select>
+                            </div>
                           <div class="form-group">
-                            <label>No Telpon</label>
-                            <input type="text"class="form-control @error('tlp') is-invalid @enderror" name="tlp" id="tlp" value="{{ $outlet->tlp }}" required>
+                            <label>Harga</label>
+                            <input type="text"class="form-control @error('harga') is-invalid @enderror" name="harga" id="harga" value="{{ $paket->harga }}" required>
                           </div>
                         </div>
                         <div class="card-footer text-right">
